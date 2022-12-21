@@ -1,0 +1,251 @@
+---
+title: 'Evidencia 2: Proyecto Integrador'
+author: "Andrea Catalina Fernández Mena A01197705"
+date: "1/5/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Caso de estudio 
+
+A continuación previo a la realización del código hubo una investigación base respecto a los virus mismos a tratar:
+
+##Pregunta 1
+La primer pregunta, hace referencia a cuales son algunos virus que sean similares a  SARS-CoV-2 en el mundo, para lo cuál se responde que el SARS-CoV-2 cuenta con similitudes principalmente con virus como el MERS-CoV y el SARS-CoV, ya que los 3 de ellos provienen de la familia de los coronavirus que han sido detectados por infectar a los humanos, aunque existen ciertas variaciones de similitud o discrepancia dentro de los mismo, algunos ejemplos son el nivel de qué tan patógeno es cada uno, postulando al SARS-CoV en primera posición, aunque es muy similar en estructura y patogenicidad al SARS-CoV-2, aunque la la proteína de pico (S), es ligeramente diferente en estos virus, en el caso de MERS-CoV, al tener características de ser de la misma familia dicho virus posee una estructuración y comportamientos muy similares a los previamente mencionados[1]. El porcentaje de similitud que posee con el SARS-CoV es de hasta un 79% y respecto a niveles de secuencias en su genotipo hasta un 96% con el virus RaTG13 (murciélago), múltiples estudios hacen referencia a que existe una enorme similitud de hasta un 97% en la estructura de nucleótidos con aquellos de la manis javanica , además de una enorme similitud, síntomas y signos de infección en cuanto a contagio de influenza [2].
+
+
+##Pregunta 2
+Posteriormente, en el segundo cuestionamiento hacemos referencia acerca de cuáles son los coronavirus reportados en otras especies que pueden ser cercanos al genoma de SARS-CoV-2, de lo cual podemos recapitular, tal y como fue mencionado en el párrafo de cuestionamiento  previo el coronavirus que ocurre en murciélagos también conocido como Bat CoV RaTG13 con el cual comparte un 96.2% en cuánto a similitud genética, así como 93.1% en similitud de proteínas.
+
+Así como un 80% de similitud en cuanto a  secuencia de nucleótidos con el virus ORF (Ectima Contagioso, Boquera), el cual proviene de ovejas y cabras, y por último también se encontró que posee un enorme porcentaje de coincidencia de nucleótidos  en el coronavirus de especies como la manis javanica con una coincidencia de hasta el 97%. 
+Por lo que es muy probable que el SARS-CoV-2 haya tenido un tipo de  transmisión por zoonosis, es decir que existió una transmisión de una especie animal hacia la especie homo sapiens. 
+
+Sin embargo, este no es el único caso en donde existe un contagio por zoonosis, como es el caso de otras especies de coronavirus e influenza, como es el caso de SARS-CoV en dónde su transmisión originalmente se daba meramente en murciélagos de herradura chino, y cuyo portador intermediario entre animales y el hombre del mismo eran los gatos siberianos o en el caso de los MERS-CoV en el cual se daba en murciélagos y camellos y tuvieron posteriormente como portador intermediario a los dromedarios, o incluso en la Influenza A donde su contagio original se daba en aves, y posteriormente el portador que lo contagió a los humanos fueron los cerdos [2].
+
+
+#Pregunta 3
+Por último, para responder a la última pregunta es muy importante considerar desde cuál factor estamos considerando, ya que depende muchísimo respecto a qué ámbito se está tratando, para así lograr una conexión y solución más profunda, ya que no existe un punto de partida sobre un contexto en específico, se tomará en cuenta la relación economía-salud, en la cuál es más que importante como gobierno mantener una activación económica con todas las medidas necesarias, así como incentivos a empresas, para que estas no cierren y las personas no pierdan su empleo.
+
+Si me encontrará en una situación de riesgo y  bajos recursos frente a una situación de  covid procurará  salir lo menor posible, sólo salir a mi trabajo y seguir las medidas de salud necesarias, y de darse el caso que veo que mi trabajo está pasando por momentos pesados y exista la posibilidad de que cierren buscaría oportunidades de empleo en un lugar que sea de tipo esencial, dónde yo tenga por seguro que no van a cerrar, para así continuar buscando una manera de sustento en caso de que me despidan en mi otro trabajo, y más que nada cuidarme lo más posible para evitar contagiarme . 
+
+
+## Elaboración de prácticas en R 
+De las siguientes tres opciones, selecciona una opción para investigar:
+
+* Analizar las secuencias de SARS-CoV-2 reportadas en los 20 países con más casos reportados. Y puedes tratar de responder a la pregunta: ¿Son muy diferentes las variantes entre cada país? ¿Es diferente el SARS-CoV-2 entre las diferentes poblaciones: Asiática, Hispana, Europea o Africana?
+
+*Trabajar con las secuencias de los coronavirus de otras especies que son similares a SARS-CoV-2, para tratar de explicar el fenómeno de zoonosis del virus. Incluye 20 especies reportadas. Puedes trabajar con variantes de SARS-CoV-2 de otros países.
+
+*Estudia la cercanía de SARS-CoV-2 con otros coronavirus humanos que ocasionan enfermedades similares (como MERS). En tu investigación debes trabajar con 20 virus diferentes.
+
+
+
+Para la cuál se seleccionó analizar las secuencias de SARS-CoV de los países con un mayor número de contagios, los cuales, de acuerdo con John Hopkins University son los siguientes de mayor a menor número de casos:
+
+1.- Estados Unidos (MT635268)    https://www.ncbi.nlm.nih.gov/nuccore/MT635268.1 
+
+2.- India (MT416725)    https://www.ncbi.nlm.nih.gov/nuccore/MT416725.2
+
+3.- Brasil (MW642248)    https://www.ncbi.nlm.nih.gov/nuccore/MW642248.1
+
+4.- Francia (MW322968)    https://www.ncbi.nlm.nih.gov/nuccore/MW322968.1 
+
+5.- Turquía (MW306666)    https://www.ncbi.nlm.nih.gov/nuccore/MW306666.1
+
+6.- Rusia (MW332241)    https://www.ncbi.nlm.nih.gov/nuccore/MW332241.1 
+
+7.- Reino Unido (MT906650)      https://www.ncbi.nlm.nih.gov/nuccore/MT906650.1 
+
+8.- Italia (MW530512)    https://www.ncbi.nlm.nih.gov/nuccore/MW530512.1
+
+9.- España (MW769774)      https://www.ncbi.nlm.nih.gov/nuccore/MW769774.1 
+
+10.- Alemania (MT582499)    https://www.ncbi.nlm.nih.gov/nuccore/MT582499.1
+
+11.- Argentina (MW633906)    https://www.ncbi.nlm.nih.gov/nuccore/MW633906.1 
+
+12.- Colombia (MT470219)      https://www.ncbi.nlm.nih.gov/nuccore/MT470219.1
+
+13.- Polonia  (MT775832)        https://www.ncbi.nlm.nih.gov/nuccore/MT775832.1 
+
+14.- Irán (MW898809) https://www.ncbi.nlm.nih.gov/nuccore/MW898809.1 
+
+15.- México (MW595908) https://www.ncbi.nlm.nih.gov/nuccore/MW595908.1 
+
+16.- Ucrania —————————————————————————————  (No encontrada)
+
+17.- Perú      (MT263074)         https://www.ncbi.nlm.nih.gov/nuccore/MT263074.1 
+
+18.- Indonesia      (MZ026855)    https://www.ncbi.nlm.nih.gov/nuccore/MZ026855.1 
+
+19.- República Checa     (MT371574)    https://www.ncbi.nlm.nih.gov/nuccore/MT371574.1 
+
+20.- Sudáfrica        (MT324062)    https://www.ncbi.nlm.nih.gov/nuccore/MT324062.1
+
+21.- Países Bajos   (MT705206)     https://www.ncbi.nlm.nih.gov/nuccore/MT705206.1
+
+
+Para lo cuál mandamos a llamar a las siguientes librerías:
+
+```{r}
+library(ape)
+library(ggplot2)
+library(ggtree)
+library(seqinr)
+library(viridis)
+library(geiger) 
+library(phytools) 
+library(Biostrings)
+library(DECIPHER)
+
+```
+Para el cuál desarrollamos el siguiente arreglo: 
+
+```{r}
+covid <- c("MT635268","MT416725","MW642248","MW322968","MW306666", "MW332241","MT906650","MW530512","MW769774","MT582499","MW633906", "MT470219","MT775832","MW898809","MW595908","MT263074","MZ026855", "MT371574","MT324062","MT705206")
+
+```
+
+Calcula la longitud de las secuencias que incluyas.
+```{r}
+#Llamar a la secuencia del virus 
+
+covid <- function(covid) {
+  covid_secuencia <- read.GenBank(covid, as.character = TRUE)
+  return(covid_secuencia)
+}
+
+#igualar los de la función del arreglo a valores dentro de la función virus 
+US = covid("MT635268")
+India = covid("MT416725")
+Brazil = covid("MW642248")
+France = covid("MW322968")
+Turkey = covid("MW306666")
+Russia = covid("MW332241")
+UK = covid("MT906650")
+Italy = covid("MW530512")
+Spain = covid("MW769774")
+Germany = covid("MT582499")
+Argentina = covid("MW633906")
+Colombia = covid("MT470219")
+Poland = covid("MT775832")
+Iran = covid("MW898809" )
+Mexico = covid("MW595908")
+Peru = covid("MT263074")
+Indonesia = covid("MZ026855")
+Czech_Republic = covid("MT371574")
+SouthAfrica = covid("MT324062")
+Netherlands = covid("MT705206")
+```
+
+Calcula la longitud de las secuencias que incluyas.
+
+```{r}
+longitud = function(virus) {
+  length_virus = length(virus[[1]])
+  length_virus
+  return(length_virus)
+}
+
+# Calcula la longitud de las secuencias que incluyas.
+EU_secuencia = longitud(US)
+India_secuencia = longitud(India)
+Brasil_secuencia = longitud(Brazil)
+France_secuencia = longitud(France)
+Turquia_secuencia = longitud(Turkey)
+Rusia_secuencia = longitud(Russia)
+UK_secuencia = longitud(UK)
+Italia_secuencia = longitud(Italy)
+España_secuencia =  longitud(Spain)
+Alemania_secuencia = longitud(Germany)
+Argentina_secuencia = longitud(Argentina)
+Colombia_secuencia = longitud(Colombia)
+Poland_secuencia = longitud(Poland)
+Iran_secuencia = longitud(Iran)
+Mexico_secuencia = longitud(Mexico)
+Peru_secuencia = longitud(Peru)
+Indonesia_secuencia = longitud(Indonesia)
+Czech_secuencia = longitud(Czech_Republic)
+Sudafrica_secuencia = longitud(SouthAfrica)
+Holanda_secuencia = longitud(Netherlands)
+
+#Guardar nombres de los países en determinado orden y posteriormente al graficarlos 
+paises =  c("Estados Unidos","India","Brazil","Francia","Turquia","Rusia", "Reino Unido","Italia","España","Alemania","Argentina","Colombia","Polonia","Iran","Mexico","Peru","Indonesia","Republica Checa","Sudafrica","Paises Bajos")
+
+#Guardasr valores de las secuencias 
+virus_secuencia = c(EU_secuencia,India_secuencia,Brasil_secuencia, France_secuencia,Turquia_secuencia,Rusia_secuencia,UK_secuencia, Italia_secuencia,España_secuencia, Alemania_secuencia,Argentina_secuencia, Colombia_secuencia,Poland_secuencia,Iran_secuencia,Mexico_secuencia, Peru_secuencia,Indonesia_secuencia,Czech_secuencia,Sudafrica_secuencia, Holanda_secuencia)
+```
+
+Crea una sola gráfica donde se comparen el número de bases de ADN que componen todas las variantes del virus. 
+```{r}
+graph = barplot(virus_secuencia)
+text(graph, par("usr")[3], labels = paises, srt = 45, adj = c(1.1,1.1), xpd = TRUE, cex=0.6) 
+```
+
+Crea una comparación de similitud de las secuencias de ADN
+```{r}
+x <- letterFrequency(x = virus_secuencia, letters = DNA_BASES, as.prob = T)
+x
+```
+
+
+Agrega un análisis jerárquico global obtenido de las secuencias que se seleccionaron para estudiar.
+```{r}
+covidGlobal_sequences <- read.GenBank(covid)
+
+str(covidGlobal_sequences)
+
+write.dna(covidGlobal_sequences,file="covidGlobal_sequences.fasta",format= "fasta",append=+FALSE,nbcol=6,colsep=" ",colw=10)
+
+covidGlobal_sequences_not_align <- readDNAStringSet("covidGlobal_sequences.fasta", format = "fasta")
+
+covidGlobal_sequences_not_align <- 
+OrientNucleotides(covidGlobal_sequences_not_align)
+
+covidGlobal_sequences_align<-AlignSeqs(covidGlobal_sequences_not_align)
+
+BrowseSeqs(covidGlobal_sequences_align, highlight=0)
+
+writeXStringSet(virus_seq_align, file="covidGlobal_sequences.fasta")
+
+class(covid_tree) 
+tree<-ladderize(covid_tree)
+
+plot(covid_tree,cex=0.6)
+title("Secuencias genotípicas de SARS-CoV-2 en los 20 países más contagiados")
+
+ggtree(covid_tree)+geom_tiplab()
+```
+
+Agrega una interpretación escrita de tus gráficas y tus conclusiones según el caso de estudio que seleccionaste. No olvides sustentar tus argumentos con las lecturas que realizaste.
+
+##Interpretación 
+
+Respecto a la gráfica de barras y la de árboles filogenéticos, es posible observar, podemos inferir que debido a que se trata del mismo virus categorizado, todos tienen una ramificación en común, aunque de igual forma, es visible en el análisis de árbol acerca de que existen muchas variantes comparttidas dentro de las  caracteristicas dependiendo la raza y la zona geografica. Lo cuál era bastante esperable, ya que por el hecho de tratarse de un virus, se encuentran en constantes mutaciones para sobrevivir al entorno en el que se encuentran, y por eso mismo, el contexto de cada continente produce este efecto en cada uno de los países y sus variantes. 
+Respecto a las  variantes de ADN y de número de secuencias, esto también es observable, ya que dependeinto de las mismas y los factores externos el virus se volverá más o menor resistente en medida al contexto con el que se le asocie y se haya adaptado.
+
+
+## Conclusiones 
+¿Son muy diferentes las variantes entre cada país? ¿Es diferente el SARS-CoV-2 entre las diferentes poblaciones: Asiática, Hispana, Europea o Africana?
+
+Como conclusiones generales, respecto a las preguntas de nuestro análisis podemos decir que las diferencias entre las variaciones de cada país son casi mínimas, sin embargo, estás han evolucionado rápido con el paso de un año, y existen diferencias relativas respecto a sus recuencias y bases de ADN, que pueden darnos a entender la posibilidad de la existencia de sepas con variaciones más notables que pueden desembocar en mayor o menor gravedad de los efectos mismos. Respecto a las diferentes poblaciones de acuerdo a cada continente si hay tipos de agrupación notables, esto podemos inferir que se debe principalmente a la alimentación, clima y factos socio-económicos que facilitan o bien dificultan el contagio del virus mismo, y esto a su vez potencia las variantes mismas.
+
+
+
+##Fuentes Bibliográficas:
+
+  [2]Abdelrahman, Z., Li, M., & Wang, X. (2020). Comparative Review of SARS-CoV-2, SARS-CoV, MERS-CoV, and Influenza A Respiratory Viruses. Frontiers in immunology, 11, 552909. https://doi.org/10.3389/fimmu.2020.552909 
+
+ [3] Johns Hopkins Coronavirus Resource Center. (2021). COVID-19 Dashboard by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University (JHU). Recuperado de https://coronavirus.jhu.edu/map.html
+  
+  [1] Rabaan AA, Al-Ahmed SH, Haque S, Sah R, Tiwari R, Malik YS, Dhama K, Yatoo MI, Bonilla-Aldana DK, Rodriguez-Morales AJ. (2020). SARS-CoV-2, SARS-CoV, and MERS-COV: A comparative overview. Recuperado de https://pubmed.ncbi.nlm.nih.gov/32275259/
+  
+  
+
+
+
