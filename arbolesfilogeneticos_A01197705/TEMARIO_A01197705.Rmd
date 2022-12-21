@@ -1,0 +1,111 @@
+---
+title: "Árboles Filogeneticos"
+author: "Andrea Catalina Fernández Mena A01197705"
+date: "27/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Notas previas al ejercicio 
+R phylogenetics se basa en los paquetes contribuidos para filogenética en R, y hay muchos de estos paquetes. Comencemos hoy instalando algunos paquetes críticos, como ape, phangorn, phytools y geiger. Para obtener la versión CRAN más reciente de estos paquetes, ¡necesitará tener R 3.3.x instalado en su computadora!
+
+1.- Cargar las libreríass necesarias 
+```{r cars}
+BiocManager::install("Biostrings")
+BiocManager::install("ggtree")
+BiocManager::install("DECIPHER")
+library(adegenet)
+library(ape)
+library(viridis)
+library(ggplot2)
+```
+
+## Including Plots
+
+2.- Ahora hemos instalado paquetes críticos (ape, phangorn, phytools, geiger). El paquete principal más importante para las filogenias en R se llama "ape", que significa Análisis de Filogenética y Evolución en R. El paquete lo puedes consultar en: APE
+
+Arbol filogenético humano y lemur:
+
+```{r pressure, echo=FALSE}
+library(ape)
+text.string<-
+    "(lemur,human);"
+vert.tree<-read.tree(text=text.string)
+plot(vert.tree,no.margin=TRUE,edge.width=2)
+```
+
+3.- Comparación de árbol filogénetico el un murciélago, lemur y humano
+```{r}
+text.string<-
+    "(bat,(lemur,human));"
+vert.tree<-read.tree(text=text.string)
+plot(vert.tree,no.margin=TRUE,edge.width=2)
+```
+
+4.- Comparación del humano con varias especies (lemur, murcielago, vaca, cerdo y ballena)
+```{r}
+text.string<-
+    "(((cow, pig),whale),(bat,(lemur,human)));"
+vert.tree<-read.tree(text=text.string)
+plot(vert.tree,no.margin=TRUE,edge.width=2)
+```
+
+5.- Desarrolla el árbol filogenético entre (orangulates, gorilas,(humanos(chimpances, bonobos)))
+```{r}
+text.string<-
+    "(orangutans, gorillas,(human,(chimpanzees, bonobos)));"
+vert.tree<-read.tree(text=text.string)
+plot(vert.tree,no.margin=TRUE,edge.width=2)
+```
+
+Ejemplos con phytools:
+
+```{r}
+library(phytools)
+roundPhylogram(vert.tree)
+ 
+```
+
+El objeto creado en la memoria cuando simulamos o estimamos una filogenia, o leemos una de un archivo de entrada, es una lista de la clase "filo".
+
+Recuerde, una lista es solo un tipo de objeto personalizable que puede combinar diferentes objetos de diferentes tipos. Por ejemplo, una lista puede tener un vector de números reales (con el modo "numérico") como primer elemento; y luego un vector de cadenas (con el modo "carácter") como su segundo elemento; y así. Asignar nuestro árbol con una clase especial, "phylo", es solo una forma conveniente de indicarle a las funciones especiales en R cómo tratar ese objeto.
+
+Un objeto de la clase "phylo" tiene al menos tres partes. Estos normalmente están ocultos, por ejemplo, simplemente escribir el nombre de su objeto "phylo" no le da la estructura en la memoria, como lo hace para muchos objetos R:
+```{r}
+vert.tree
+str(vert.tree)
+```
+
+Para comprender la estructura de un objeto "filo" un poco más claramente, leamos una filogenia mucho más simple, y luego descomponga en sus componentes esenciales:
+```{r}
+tree<-read.tree(text="(((A,B),(C,D)),E);")
+plotTree(tree,offset=1)
+tiplabels()
+nodelabels()
+```
+
+## Escribir y leer árboles filogenéticos
+Podemos escribir y leer árboles fácilmente desde y hacia archivos, por ejemplo, con el archivo: alo.tre
+```{r}
+anolis.tree<-read.tree(file="alo.tre")
+anolis.tree
+## Phylogenetic tree with 82 tips and 81 internal nodes.
+## 
+## Tip labels:
+##   Anolis_ahli, Anolis_allogus, Anolis_rubribarbus, Anolis_imias, Anolis_sagrei, Anolis_bremeri, ...
+## 
+## Rooted; includes branch lengths.
+plotTree(anolis.tree,ftype="i",fsize=0.6,lwd=1)
+
+```
+
+Otro método de trazado conveniente para grandes árboles enraizados es un árbol circular o 'abanico':
+```{r}
+plot(anolis.tree,type="fan")
+```
+Revisa el siguiente video y trabaja en el caso de estudio: 
+
+https://www.youtube.com/watch?v=09eD4A_HxVQ 
