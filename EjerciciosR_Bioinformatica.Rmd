@@ -1,0 +1,219 @@
+---
+m---
+title: "Bioinformática"
+author: "Cesar Vazquez"
+date: "4/10/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Si da error: install.packages("assertthat")
+library(assertthat);
+```
+
+#### Instrucciones:
+
+Una molécula de ADN consta de dos hebras que se enrollan en torno a un eje imaginario común dando lugar a la famosa doble hélice, un modelo estructural propuesto en 1953 por James Watson y Francis Crick. Cada cadena se denomina también hebra (strand) y está formada por desoxirribonucleótidos unidos entre sí mediante enlaces de tipo fosfodiéster que se forman entre el grupo fosfato en posición 5' de un desoxirribonucleótido y el grupo hidroxilo en posición 3' de otro. El orden en que se disponen cada una de las 4 bases posibles (A, C, T y G) determina su secuencia.
+
+#### **Nota:**
+
+Recuerda que en los últimos años ha habido un avance exponencial en el campo de la secuenciación del ADN. Se han desarrollado métodos de alto rendimiento para acelerar el proyecto de secuenciación. Aun así, la secuenciación básica del ADN es una tecnología que lee cada nucleótido paso a paso por métodos químicos para descifrar el orden de las letras A, T, G y C que se colocaron en la secuencia de ADN específica. Sin embargo, para este problema, le hemos dado un breve resultado de la secuencia de datos. En los resultados de secuenciación de laboratorio típicos, parte de la secuencia de ADN podría verse así: "CTGATTT-GATGGTC-NAT", donde aparte de ATGC pudimos ver algunos guiones (omitidos) y N (desconocido) nucleótido.
+
+## Problemas:
+
+1.  Escribe una función que genere una secuencia aleatoria de DNA de tamaño "n".
+
+    ```{r}
+    DNA <- function(n){
+      secuencia <- c('A','T','G','C','-','N')
+      #Se puso una carga a cada tipo de dato para que saliero menos probable "-","%"
+      dna <- sample(secuencia,n,prob=c(0.20, 0.20, 0.20, 0.20, 0.10, 0.10),replace = T)
+      return(dna);
+    }
+    ```
+
+2.  Codifica una función que calcula el tamaño de una secuencia de DNA.
+
+    ```{r}
+    DNA.size <- function(dna){
+      length(dna)
+    }
+    ```
+
+3.  Crea una función que recibe una secuencia de DNA e imprime el porcentaje de cada base en la secuencia.
+
+    ```{r}
+    DNA.porcentage <- function(X){
+      print(paste("A: ",100 * (length(which(X == 'A')) / DNA.size(X)),'%'))
+      print(paste("T: ",100 * (length(which(X == 'T')) / DNA.size(X)),'%')) 
+      print(paste("G: ",100 * (length(which(X == 'G')) / DNA.size(X)),'%'))  
+      print(paste("C: ",100 * (length(which(X == 'C')) / DNA.size(X)),'%')) 
+      print(paste("-: ",100 * (length(which(X == '-')) / DNA.size(X)),'%')) 
+      print(paste("N: ",100 * (length(which(X == 'N')) / DNA.size(X)),'%')) 
+    }
+    ```
+
+4.  Programa una función que transcribe DNA a RNA, usa la siguiente tabla:
+
+    ```{r}
+    DNA.toRNA <- function(y){
+      Dsec <- c('A','T','G','C','-','N')
+      Rsec <- c('U','A','C','G','-','N')
+      names(Rsec) <- Dsec
+      rna <- c()
+      return(rna <- c(rna,Rsec[y]))
+    }
+    ```
+
+5.  Crea una función que traduce una secuencia de RNA a una secuencia de proteínas.
+
+    ![](images/paste-2BB211FA.png){width="444"}
+
+    ```{r}
+    proteina <-function(codon){
+      rna_bases <- c("U", "C", "A", "G") 
+      all_codons <- c() 
+      for(i in rna_bases)      
+        for(j in rna_bases)          
+          for(k in rna_bases)  
+            all_codons <- c(all_codons, paste(i,j,k, sep=""))
+      protein <- c("Phe","Leu","Ser","Tyr","Stop","Cys","Trp","Pro","His","Gln","Arg","lle","Met","Thr","Asn","Lys","Val","Ala","Asp","Glu","Gly")
+
+      index_codon_protein <- c(1, 1, 2, 2, rep(3,4), 4, 4, 5, 5, 6, 6, 5, 7, rep(2,4), rep(8,4), 9, 9, 10, 10, rep(11,4), rep(12,3), 13, rep(14,4), 15, 15, 16, 16, 3, 3, 11, 11, rep(17,4), rep(18,4), 19, 19, 20, 20, rep(21,4))
+      rna_prot_code <- protein[index_codon_protein]
+      names(rna_prot_code) <- all_codons
+      return(rna_prot_code[codon])
+    }
+    RNA.toProteinas <- function(RNA){
+      secuencia <- ''
+      count <- 1
+      codonCount <- 1
+      codon <- c()
+      scodon <- ''
+      for(i in RNA){
+        scodon <- gsub(" ", "",paste(scodon,i))
+        if(count %% 3 == 0){
+          codon <- c(codon,scodon)
+          secuencia <- paste(secuencia,proteina(codon[codonCount]))
+          scodon <- ''
+          codonCount <- codonCount + 1
+        }
+        count <- count + 1
+      }
+      print(codon)
+      return(secuencia)
+    }
+
+    ```
+
+6.  Para representar una molécula de ADN de doble hebra basta con escribir la secuencia de una de sus hebras. Consideremos, por ejemplo, la secuencia TGCGATAC. Como no se indica lo contrario, se asume que la secuencia está escrita en sentido 5'→3' y, por lo tanto, se trata de la hebra directa (forward strand):
+
+    **Hebra directa: 5'-TGCGATAC-3'**
+
+    Análogamente, si decido escribir esta misma secuencia empezando por el extremo 3' se obtiene la hebra inversa (reverse strand):
+
+    **Hebra inversa: 3'-CATAGCGT-5'**
+
+    **Escribe una función que recibe una hebra directa y regresa la hebra inversa.**
+
+    ```{r}
+    strToVector <- function(secuencia){
+      if(is.string(secuencia)){
+        return(secuencia <- strsplit(secuencia, "")[[1]])
+      }else{
+        return(secuencia)
+      }
+    }
+    ```
+
+    ```{r}
+    reverse <- function(secuencia){
+      secuencia <- strToVector(secuencia)
+      DNAseq <- paste(rev(secuencia),collapse="")
+      return(DNAseq)
+    }
+    ```
+
+7.  Normalmente se representa la molécula escribiendo primero la hebra directa y debajo la hebra complementaria (complementary strand). La hebra complementaria se escribe en sentido 3'→5' para que las bases de ambas hebras queden emparejadas: 
+
+    **a. Hebra directa: 5'-TGCGATAC-3'**
+
+    **b. Hebra complementaria: 3'-ACGCTATG-5'.**
+
+    Escribe una función qué recibe una hebra directa y obtiene la hebra complementaria.
+
+    ```{r}
+    complementary <- function(comp){
+      comp <- strToVector(comp)
+      Dsec <- c('A','T','G','C','-','N')
+      Csec <- c('T','A','C','G','-','N')
+      names(Csec) <- Dsec
+      adn <- c()
+      rna <- c(adn,Csec[comp])
+      return(paste(rna,collapse=""))
+    }
+    ```
+
+8.  Si escribimos la secuencia de la hebra complementaria en sentido inverso (5'→3') se obtiene la complementaria inversa (reverse-complement):
+
+    a\. **Hebra complementaria: 3'-ACGCTATG-5'**
+
+    b\. **Hebra complementaria inversa: 5'-GTATCGCA-3'**
+
+    Escribe la función en R para obtener la hebra complementaria inversa, desde una hebra complementaria.
+
+    ```{r}
+    reverse.complement <- function(seq){
+      reverse(seq)
+    }
+    ```
+
+9.  Prueba cada una de las funciones y recuerda que las secuencias pueden contener caracteres especiales donde aparte de ATGC, en ADN, y AUGC, en ARN, pudimos ver algunos guiones (omitidos) y N (desconocido) nucleótido.
+
+    ```{r}
+    # 1 Secuencia aleatoria de DNA
+    X <- DNA(9)
+    X
+
+    # 2 Tamaño de una secuencia de DNA
+    DNA.size(X)
+
+    # 3 Porcentaje de cada base en la secuencia.
+    DNA.porcentage(X)
+
+    #4 Transcribe DNA a RNA
+    RNA <-DNA.toRNA(X)
+    RNA
+
+    #5 Traduce una secuencia de RNA a una secuencia de proteínas
+    RNA.toProteinas(RNA)
+
+    #6 Hebra directa y regresa la hebra inversa.
+    reverse("ATG")
+    reverse(X)
+
+    #7 Hebra directa y obtiene la hebra complementaria.
+    complementary("ATG")
+    complementary(X)
+
+    #8 Hebra complementaria inversa, desde una hebra complementaria.
+    reverse.complement("ACGCTATG")
+    reverse.complement(X)
+    ```
+
+    ## Análisis de vídeos:
+
+    #### Genome Editing and CRISPR:
+
+    1)  ¿Qué ventajas crees que nos puede dar la tecnología CRISPR?
+
+    2)  ¿Cuáles son las implicaciones éticas de aplicar la tecnología CRISPR en humanos?
+
+    #### What happens when I get my genome sequenced
+
+    1)  ¿Qué ventajas nos brinda tener nuestro genoma secuenciado?
+
+    2)  ¿Desearías tener tu genoma secuenciado? ¿Sí o No? ¿Por qué?
